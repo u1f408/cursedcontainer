@@ -17,6 +17,22 @@
 //! let key = CONTAINER.insert(69420);
 //! assert_eq!(CONTAINER.get(key), Some(&mut 69420));
 //! ```
+//!
+//! # Safety
+//!
+//! Hahah, good joke.
+//!
+//! There is some safety built into `CursedContainer` around initialization race conditions, but
+//! accessing items within the container is unsafe by design - it allows for retrieving multiple
+//! mutable references to the same object stored within the container.
+//!
+//! It is the responsibility of your application code to make sure that things don't go horribly
+//! wrong when using a `CursedContainer`.
+//!
+//! # But... why?
+//!
+//! This crate was developed for the author's hobby operating system project, and the lack of
+//! safety in here is designed for that purpose.
 
 extern crate alloc;
 
