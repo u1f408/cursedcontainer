@@ -1,0 +1,19 @@
+[package]
+edition = "2021"
+name = "cursedcontainer"
+description = "A \"cursed\" container with opaque keys, usable as a static variable"
+version = "0.1.0"
+license = "MIT"
+authors = [
+    "The Iris System <iris@iris.ac.nz>"
+]
+
+[features]
+default = [ "std" ]
+std = [ "spin/std" ]
+
+[dependencies]
+spin = { version = "0.9", default-features = false, features = [ "mutex", "spin_mutex" ] }
+
+[badges]
+github = { repository = "u1f408/cursedcontainer" }
