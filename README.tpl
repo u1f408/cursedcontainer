@@ -1,7 +1,7 @@
-[![Crates.io](https://img.shields.io/crates/v/cursedcontainer.svg)](https://crates.io/crates/cursedcontainer)
-{{badges}}
-
 # {{crate}}
+
+[![Crates.io](https://img.shields.io/crates/v/cursedcontainer.svg)](https://crates.io/crates/cursedcontainer)
+[![Workflow status](https://github.com/u1f408/cursedcontainer/actions/workflows/test.yml/badge.svg)](https://github.com/u1f408/cursedcontainer/actions/workflows/test.yml)
 
 {{readme}}
 

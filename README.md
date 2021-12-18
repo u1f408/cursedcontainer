@@ -1,7 +1,7 @@
-[![Crates.io](https://img.shields.io/crates/v/cursedcontainer.svg)](https://crates.io/crates/cursedcontainer)
-[![Workflow Status](https://github.com/u1f408/cursedcontainer/workflows/main/badge.svg)](https://github.com/u1f408/cursedcontainer/actions?query=workflow%3A%22main%22)
-
 # cursedcontainer
+
+[![Crates.io](https://img.shields.io/crates/v/cursedcontainer.svg)](https://crates.io/crates/cursedcontainer)
+[![Workflow status](https://github.com/u1f408/cursedcontainer/actions/workflows/test.yml/badge.svg)](https://github.com/u1f408/cursedcontainer/actions/workflows/test.yml)
 
 A "cursed" container with an opaque key type, that allows for retrieving mutable references to
 the objects contained within.
