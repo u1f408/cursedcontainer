@@ -2,8 +2,9 @@
 edition = "2021"
 name = "cursedcontainer"
 description = "A \"cursed\" container with opaque keys, usable as a static variable"
-version = "0.1.0"
+version = "0.1.1"
 license = "MIT"
+repository = "https://github.com/u1f408/cursedcontainer"
 authors = [
     "The Iris System <iris@iris.ac.nz>"
 ]
