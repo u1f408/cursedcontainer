@@ -22,12 +22,16 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use core::cell::UnsafeCell;
-use core::sync::atomic::{AtomicBool, Ordering};
+use core::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use spin::Mutex;
+
+/// The container ID value of the next-created container, incremented on container initialization.
+static NEXT_CONTAINER_ID: AtomicUsize = AtomicUsize::new(1);
 
 /// Opaque key type for the "cursed" container
 #[derive(Copy, Clone, PartialEq)]
 pub struct CursedKey {
+    pub(crate) container_id: usize,
     pub(crate) key: usize,
 }
 
@@ -35,6 +39,7 @@ pub struct CursedKey {
 pub struct CursedContainer<T> {
     initialized: AtomicBool,
     lock: Mutex<()>,
+    id: AtomicUsize,
     inner: UnsafeCell<Option<Vec<Option<UnsafeCell<T>>>>>,
 }
 
@@ -58,6 +63,7 @@ impl<T> CursedContainer<T> {
         CursedContainer {
             initialized: AtomicBool::new(false),
             lock: Mutex::new(()),
+            id: AtomicUsize::new(0),
             inner: UnsafeCell::new(None),
         }
     }
@@ -71,6 +77,11 @@ impl<T> CursedContainer<T> {
             if !self.initialized.load(Ordering::Relaxed) {
                 // We're uninitialized, let's set up
                 let _ = core::mem::replace(unsafe { &mut *self.inner.get() }, Some(Vec::new()));
+                self.id.store(
+                    NEXT_CONTAINER_ID.fetch_add(1, Ordering::Release),
+                    Ordering::Release,
+                );
+
                 self.initialized.store(true, Ordering::Release);
             }
         }
@@ -86,6 +97,7 @@ impl<T> CursedContainer<T> {
         let inner = self.get_inner();
         inner.push(Some(UnsafeCell::new(value)));
         CursedKey {
+            container_id: self.id.load(Ordering::Relaxed),
             key: inner.len() - 1,
         }
     }
@@ -93,6 +105,10 @@ impl<T> CursedContainer<T> {
     /// Get a mutable reference to a value in the container
     pub fn get<'a>(&self, key: CursedKey) -> Option<&'a mut T> {
         self.init();
+
+        if key.container_id != self.id.load(Ordering::Relaxed) {
+            return None;
+        }
 
         let inner = self.get_inner();
         if let Some(vc) = inner.get(key.key) {
