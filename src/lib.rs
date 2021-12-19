@@ -1,5 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
+//! **Please, for the love of all things good in the world, do not use this crate unless you've
+//! read the code thoroughly and understand the implications of using such an utterly unsafe piece
+//! of software. _You have been warned._**
+//!
 //! A "cursed" container with an opaque key type, that allows for retrieving mutable references to
 //! the objects contained within.
 //!
