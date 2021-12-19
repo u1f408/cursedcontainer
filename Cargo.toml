@@ -2,7 +2,7 @@
 edition = "2021"
 name = "cursedcontainer"
 description = "A \"cursed\" container with opaque keys, usable as a static variable"
-version = "0.1.1"
+version = "0.1.2"
 license = "MIT"
 repository = "https://github.com/u1f408/cursedcontainer"
 authors = [
